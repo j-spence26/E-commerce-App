@@ -1,0 +1,510 @@
+openapi: 3.0.1
+info:
+  title: E-Commerce Order, Products, Cart API
+  version: 1.0.0
+  description: A basic API for an e-commerce app
+paths:
+  /order:
+    get:
+      summary: Retrieves all orders
+      description: Retrieve all orders from the database.
+      operationId: get_orders
+      responses:
+        '200':
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        '500':
+          description: Internal server error
+      tags:
+        - Orders
+
+  /order/{order_id}:
+    get:
+      summary: Retrieves order by ID
+      description: Retrieve the order details for a specific order ID.
+      operationId: get_order_by_id
+      parameters:
+        - name: order_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the order
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          description: Order not found
+        '500':
+          description: Internal server error
+      tags:
+        - Orders
+
+  /auth/register:
+    post:
+      summary: Registers a new user
+      description: Creates a customer account to allow login.
+      operationId: post_auth_register
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+              example:
+                message: "User registered"
+                user:
+                  customer_id: 4
+                  first_name: "Alice"
+                  last_name: "Smith"
+                  email: "alice@example.com"
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+      tags:
+        - Auth
+
+  /auth/login:
+    post:
+      summary: Login a user
+      description: Verifies credentials and logs in the user if correct.
+      operationId: post_auth_login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  customer_id:
+                    type: integer
+              example:
+                message: "Login successful"
+                customer_id: 4
+        '401':
+          description: Invalid credentials
+        '500':
+          description: Internal server error
+      tags:
+        - Auth
+
+  /cart:
+    post:
+      summary: Creates a new cart
+      description: Creates a cart for the customer.
+      operationId: post_cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+      responses:
+        '201':
+          description: Cart created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+              example:
+                cart_id: 3
+                customer_id: 3
+                created_at: "2025-11-12T12:35:10.7676Z"
+                items: []
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+      tags:
+        - Cart
+    get:
+      summary: Retrieves a cart
+      description: Retrieve the cart for a specific cart ID.
+      operationId: get_cart
+      parameters:
+        - name: cart_id
+          in: query
+          required: true
+          schema:
+            type: integer
+          description: ID of the cart to retrieve
+      responses:
+        '200':
+          description: Cart retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        '404':
+          description: Cart not found
+        '500':
+          description: Internal server error
+      tags:
+        - Cart
+
+  /cart/{cart_id}:
+    post:
+      summary: Adds product to cart
+      description: Adds products to a specific cart.
+      operationId: post_cart_cart_id
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the cart
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: integer
+                quantity:
+                  type: integer
+                  default: 1
+      responses:
+        '201':
+          description: Item added to cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CartItem'
+        '400':
+          description: Invalid input
+        '404':
+          description: Cart not found
+        '500':
+          description: Internal server error
+      tags:
+        - Cart
+
+  /cart/{cart_id}/checkout:
+    post:
+      summary: Converts cart to order
+      description: Converts the cart into an order.
+      operationId: checkout_cart
+      parameters:
+        - name: cart_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the cart to checkout
+      responses:
+        '200':
+          description: Checkout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  order:
+                    $ref: '#/components/schemas/Order'
+              example:
+                message: "Checkout successful"
+                order:
+                  order_id: 4
+                  customer_id: 3
+                  total: 1499.99
+                  created_at: "2025-11-12T12:35:10.7676Z"
+        '404':
+          description: Cart not found
+        '500':
+          description: Internal server error
+      tags:
+        - Cart
+
+  /users:
+    get:
+      summary: Retrieves all users
+      description: Returns all users registered via /auth/register.
+      operationId: get_users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Internal server error
+      tags:
+        - Users
+
+  /users/{user_id}:
+    get:
+      summary: Retrieves a user by ID
+      description: Retrieve user details for a specific customer ID.
+      operationId: get_user_by_id
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Customer ID
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+      tags:
+        - Users
+    put:
+      summary: Updates a user
+      description: Updates the details of a specific user.
+      operationId: put_user_by_id
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Customer ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    $ref: '#/components/schemas/User'
+              example:
+                message: "User updated"
+                user:
+                  customer_id: 1
+                  first_name: "Alice"
+                  last_name: "Smith"
+                  email: "alice.updated@example.com"
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+      tags:
+        - Users
+
+  /products:
+    get:
+      summary: Retrieves all products
+      description: Retrieve all products in the database.
+      operationId: get_products
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Internal server error
+      tags:
+        - Products
+    post:
+      summary: Adds a new product
+      description: Creates a new product in the database.
+      operationId: post_products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductInput'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+      tags:
+        - Products
+
+  /products/{category_id}:
+    get:
+      summary: Retrieves products by category
+      description: Returns all products for a specific category ID.
+      operationId: get_products_by_category_id
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID of the category
+      responses:
+        '200':
+          description: Products for the given category
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: Category not found
+        '500':
+          description: Internal server error
+      tags:
+        - Products
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        customer_id:
+          type: integer
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+    UserInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    Product:
+      type: object
+      properties:
+        product_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: string
+        stock_quantity:
+          type: integer
+        category_id:
+          type: integer
+        image:
+          type: string
+    ProductInput:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: string
+        stock_quantity:
+          type: integer
+        category_id:
+          type: integer
+        image:
+          type: string
+    CartItem:
+      type: object
+      properties:
+        cart_item_id:
+          type: integer
+        cart_id:
+          type: integer
+        product_id:
+          type: integer
+        quantity:
+          type: integer
+    Cart:
+      type: object
+      properties:
+        cart_id:
+          type: integer
+        customer_id:
+          type: integer
+        created_at:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: integer
+        customer_id:
+          type: integer
+        total:
+          type: number
+          format: float
+        created_at:
+          type: string

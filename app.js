@@ -1,17 +1,24 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const authRoutes = require('./routes/auth');
+const productsRoutes = require('./routes/products');
+const usersRoutes = require('./routes/users');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/order');
+
+app.get('/', (req, res) => {
+  res.send('Server is running! Go to /users or /auth');
+});
 
 // Middleware to parse JSON
 app.use(express.json());
+app.use('/users', usersRoutes);
+app.use('/auth', authRoutes);
+app.use('/login', authRoutes);
+app.use('/products', productsRoutes);
+app.use('/cart', cartRoutes);
+app.use('/orders', orderRoutes);
 
-// Example route
-app.get('/', (req, res) => {
-  res.send('E-commerce app server is running 🚀');
-});
+const PORT = process.env.PORT || 3000;
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-});
- 
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
