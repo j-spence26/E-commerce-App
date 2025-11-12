@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:order_id', async (req, res) => {
-    const { order_id } = req.body;
+    const { order_id } = req.params;
     try {
         const result = await pool.query('SELECT * FROM Orders WHERE order_id = $1', [order_id]);
 
