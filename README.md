@@ -30,7 +30,7 @@ Installation
 
 Clone the repository:
 
-git clone https://github.com/your-username/ecommerce-api.git
+git clone https://github.com/j-spence26/E-commerce-App
 cd ecommerce-api
 
 Install dependencies:
