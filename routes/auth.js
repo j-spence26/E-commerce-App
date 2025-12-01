@@ -1,9 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const pool = require('../db/db'); // PostgreSQL pool
+const pool = require('../db/db'); 
 const router = express.Router();
 
-// New user registration
+
 router.post('/register', async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     const query = `
       INSERT INTO Customers (first_name, last_name, email, password_hash)
       VALUES ($1, $2, $3, $4)
-      RETURNING customer_id
+      RETURNING customer_id, email;
     `;
 
     const result = await pool.query(query, [
@@ -23,17 +23,28 @@ router.post('/register', async (req, res) => {
       hashedPassword,
     ]);
 
+    const user = result.rows[0];
+
+    req.session.user = {
+      customer_id: user.customer_id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name
+    };
+
+    
     res.status(201).json({
-      message: 'User registered',
-      customer_id: result.rows[0].customer_id,
+      message: "User registered",
+      user: req.session.user
     });
+
   } catch (error) {
     console.error(error);
     res.status(400).json({ error: 'Email might already exist or server error' });
   }
 });
 
-// Login
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -51,14 +62,47 @@ router.post('/login', async (req, res) => {
     if (!match)
       return res.status(401).json({ error: 'Invalid email or password' });
 
+    req.session.user = {
+       customer_id: user.customer_id,
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name
+    };
+
     res.json({
       message: 'Login successful',
-      customer_id: user.customer_id,
+      user: req.session.user
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
+
+router.get('/me', (req, res) => {
+  if (req.session.user) {
+    res.json({ user: req.session.user });
+  } else {
+    res.status(401).json({ user: null });
+  }
+});
+
+
+router.post('/logout', (req, res) => {
+  if (req.session.user) {
+    req.session.destroy(err => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Logout failed' });
+      }
+      res.clearCookie('connect.sid'); 
+      res.json({ message: 'Logout successful' });
+    });
+  } else {
+    res.status(200).json({ message: 'No active session' });
+  }
+});
+
 
 module.exports = router;

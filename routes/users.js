@@ -1,9 +1,9 @@
-// routes/users.js
+
 const express = require('express');
-const pool = require('../db/db'); // PostgreSQL pool
+const pool = require('../db/db'); 
 const router = express.Router();
 
-// GET all users
+
 router.get('/', async (req, res) => {
     try {
         const result = await pool.query('SELECT customer_id, first_name, last_name, email FROM Customers');
