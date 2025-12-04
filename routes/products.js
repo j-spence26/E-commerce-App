@@ -12,16 +12,16 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:category_id', async (req, res) => {
-    const { category_id } = req.body;
+router.get('/:product_id', async (req, res) => {
+    const { product_id } = req.params;
     try {
-        const result = await pool.query('SELECT * FROM Products WHERE category_id = $1', [category_id]);
+        const result = await pool.query('SELECT * FROM Products WHERE product_id = $1', [product_id]);
         
         
         if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'No products found for this catgeory' })
+            return res.status(404).json({ message: 'No products found' })
         }
-        res.json(result.rows);
+        res.json(result.rows[0]);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Server error'})

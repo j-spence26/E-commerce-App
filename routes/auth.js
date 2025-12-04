@@ -2,6 +2,18 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const pool = require('../db/db'); 
 const router = express.Router();
+const passport = require('passport');
+
+router.get('/google',
+  passport.authenticate('google', { scope: ['openid', 'profile', 'email'] })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login'
+  })
+);
 
 
 router.post('/register', async (req, res) => {
@@ -47,7 +59,6 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const result = await pool.query(
       'SELECT * FROM Customers WHERE email = $1',
@@ -103,6 +114,8 @@ router.post('/logout', (req, res) => {
     res.status(200).json({ message: 'No active session' });
   }
 });
+
+
 
 
 module.exports = router;

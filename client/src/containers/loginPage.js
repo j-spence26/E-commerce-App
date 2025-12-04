@@ -62,6 +62,7 @@ export default function Login() {
 
       <p>{message}</p>
       <Link to="/registrationPage">Don't have an account? Register</Link>
+      <a href="http://localhost:3000/auth/google" className="button">Sign in with Google</a>
     </div>
   );
 }

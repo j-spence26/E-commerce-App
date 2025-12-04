@@ -3,9 +3,12 @@ import { useAuth } from "../auth/AuthContext";
 
 export const ROUTES = {
   REGISTRATIONS: "/registrationPage",
-  APPOINTMENTS: "/productsPage",
+  PRODUCTS: "/products",
   LOGIN: "/loginPage",
   HOME: "/homePage",
+  PRODUCT: "/productsPage",
+  ACCOUNT: "/accountPage",
+  CART: "cartPage",
 };
 
 function Root() {
@@ -15,7 +18,9 @@ function Root() {
     <div>
       <nav> 
         <NavLink to={ROUTES.HOME}>Home</NavLink>
-        <NavLink to={ROUTES.APPOINTMENTS}>Products</NavLink>
+        <NavLink to={ROUTES.PRODUCTS}>Products</NavLink>
+        <NavLink to={ROUTES.CART} > Cart </NavLink>
+      
 
         {!user ? (
           <>
@@ -24,9 +29,12 @@ function Root() {
         
           </>
         ) : (
+          <>
           <button onClick={logout} style={{ marginLeft: "10px" }}>
             Logout
           </button>
+            <NavLink to={ROUTES.ACCOUNT} > My Account</NavLink>
+          </>
         )}
       </nav>
 

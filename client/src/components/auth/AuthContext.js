@@ -5,15 +5,29 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
+  const checkAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:3000/auth/me", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (data.user) setUser(data.user);
+      else setUser(null);
+    } catch {
+      setUser(null);
+    }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:3000/auth/me", 
-        { credentials: "include" })
-      .then(res => res.json())
-      .then(data => {
-        if (data.user) setUser(data.user);
-      })
-      .catch(() => {});
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") {
+        checkAuth();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, []);
 
   const login = (userData) => {
@@ -29,7 +43,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoggedIn: !!user }}>
       {children}
     </AuthContext.Provider>
   );

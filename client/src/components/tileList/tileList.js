@@ -2,8 +2,7 @@ import React from "react";
 import Tile  from "../../components/tile/tile";
 
 export const TileList = ({ users, appointments }) => {
-  const items = users || appointments || [];
-  if (!Array.isArray(items)) return null;
+  
 
   return (
     <div>
