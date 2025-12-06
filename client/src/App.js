@@ -4,15 +4,16 @@ import Root, { ROUTES } from "./components/root/root";
 import Products  from "./containers/products";
 import ProductPage from "./containers/productsPage";
 import  Register from "./containers/registrationPage";
-import { useState } from 'react';
 import Login from "./containers/loginPage";
 import HomePage from "./containers/homePage";
 import { AuthProvider } from "./components/auth/AuthContext";
 import Account from "./containers/accountPage";
 import { CartProvider } from "./components/cart/cartContext";
 import Cart from "./containers/cartPage";
-import './App.css';
-
+import './styles/App.css';
+import About from "./containers/aboutPage";
+import Contact from "./containers/contactPage";
+import PrivacyPolicy from "./containers/privacyPolicyPage";
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
       <Route path={ROUTES.HOME}  element={ <HomePage /> } />
       <Route path={ROUTES.ACCOUNT} element={ <Account /> } ></Route>
       <Route path={ROUTES.CART} element={ <Cart />} ></Route>
+      <Route path={ROUTES.ABOUT} element={<About/>} > </Route>
+      <Route path={ROUTES.CONTACT} element={ <Contact />}  ></Route>
+      <Route path={ROUTES.PRIVACY} element={ <PrivacyPolicy /> } ></Route>
     </Route>
   ));
   

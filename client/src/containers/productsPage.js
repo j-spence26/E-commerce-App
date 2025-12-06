@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCart } from "../components/cart/cartContext";
 
-
-
 export default function ProductPage() {
     const { id } = useParams(); 
     const [product, setProduct] = useState(null);

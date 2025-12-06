@@ -1,5 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
+import Footer from "../footer/footer";
 
 export const ROUTES = {
   REGISTRATIONS: "/registrationPage",
@@ -8,38 +9,54 @@ export const ROUTES = {
   HOME: "/homePage",
   PRODUCT: "/productsPage",
   ACCOUNT: "/accountPage",
-  CART: "cartPage",
+  CART: "/cartPage",
+  ABOUT: "/aboutPage",
+  CONTACT: "/contactPage",
+  PRIVACY: 'privacyPolicyPage',
 };
 
 function Root() {
   const { user, logout } = useAuth();
-
   return (
     <div>
-      <nav> 
-        <NavLink to={ROUTES.HOME}>Home</NavLink>
-        <NavLink to={ROUTES.PRODUCTS}>Products</NavLink>
-        <NavLink to={ROUTES.CART} > Cart </NavLink>
-      
-
+      <nav className="nav-bar"> 
+        <div className="nav-bar-left" >
+        <NavLink to={ROUTES.HOME}
+        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+        >Home</NavLink>
+        <NavLink to={ROUTES.PRODUCTS}
+        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+        >Products</NavLink>
+        </div>
         {!user ? (
           <>
-            <NavLink to={ROUTES.LOGIN}>Login</NavLink>
-            <NavLink to={ROUTES.REGISTRATIONS}>Register</NavLink>
-        
+            <div className="nav-bar-right">
+            <NavLink to={ROUTES.LOGIN}
+            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+            >Login</NavLink>
+            <NavLink to={ROUTES.REGISTRATIONS}
+            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+            >Register</NavLink>
+            </div>
+          
           </>
         ) : (
           <>
           <button onClick={logout} style={{ marginLeft: "10px" }}>
             Logout
           </button>
-            <NavLink to={ROUTES.ACCOUNT} > My Account</NavLink>
+            <NavLink to={ROUTES.CART} className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} > Cart </NavLink>
+            <NavLink to={ROUTES.ACCOUNT} className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} > My Account</NavLink>
           </>
         )}
       </nav>
-
-      <Outlet />
+      <main>
+         <Outlet />
+        
+        </main>  
+     <Footer />
     </div>
+    
   );
 }
 

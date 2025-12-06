@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../components/auth/AuthContext";
+import ".././styles/login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -39,18 +40,21 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div >
+      <div className="title">
       <h2>Login Below</h2>
-
+      </div>
+      
+      <div className="login-form">
       <form onSubmit={handleSubmit}>
-        <input
+        <input className="login-input"
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <input
+        <input className="login-input"
           type="password"
           placeholder="Password"
           value={password}
@@ -59,10 +63,15 @@ export default function Login() {
 
         <button type="submit">Login</button>
       </form>
+      </div>
+      
 
       <p>{message}</p>
+      <div className="login-buttons">
       <Link to="/registrationPage">Don't have an account? Register</Link>
       <a href="http://localhost:3000/auth/google" className="button">Sign in with Google</a>
+      </div>
+
     </div>
   );
 }
