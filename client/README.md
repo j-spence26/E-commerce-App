@@ -1,70 +1,189 @@
-# Getting Started with Create React App
+Here is the same README with **no emojis** and a clean, professional tone.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# E-Commerce App
 
-In the project directory, you can run:
+A full-stack e-commerce application featuring secure authentication, product browsing, cart management, orders, payments, and user reviews.
+Built with React, Node.js, Express, and PostgreSQL, with Stripe for payments and Google OAuth for quick login.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Authentication
 
-### `npm test`
+* Local user registration and login
+* Google OAuth login (passport-google-oidc)
+* Secure session handling using express-session
+* Password hashing with bcrypt
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Storefront
 
-### `npm run build`
+* View all products
+* Product images, names, descriptions, and pricing
+* User-submitted product reviews
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Cart and Checkout
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Add or remove items from the cart
+* Cart persists across sessions
+* Order summary and order history
+* Stripe Checkout integration
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Orders
 
-### `npm run eject`
+* Create orders after successful payment
+* Orders linked to authenticated users
+* Accessible order history
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Frontend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* React
+* React Router
+* Context API (Auth, Cart)
 
-## Learn More
+### Backend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Node.js and Express
+* Passport & Google OAuth
+* Stripe
+* PostgreSQL (via pg)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Other
 
-### Code Splitting
+* dotenv
+* CORS
+* express-session
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+e-commerce-app/
+│
+├── client/                # React frontend
+│   ├── src/
+│   │   ├── components/
+│   │   ├── containers/
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+│
+├── routes/                # Express route handlers
+├── db/                    # SQL queries and database pool
+├── server.js              # Main server entry point
+├── package.json
+└── README.md
+```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Installation and Setup
 
-### Advanced Configuration
+### 1. Clone the repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+git clone https://github.com/j-spence26/E-commerce-App
+cd E-commerce-App
+```
 
-### Deployment
+### 2. Install backend dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+npm install
+```
 
-### `npm run build` fails to minify
+### 3. Install frontend dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+cd client
+npm install
+cd ..
+```
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```
+DATABASE_URL=postgres://username:password@localhost:5432/ecommerce
+SESSION_SECRET=your-secret
+GOOGLE_CLIENT_ID=your-id
+GOOGLE_CLIENT_SECRET=your-secret
+GOOGLE_CALLBACK_URL=http://localhost:3001/auth/google/callback
+STRIPE_SECRET_KEY=your-stripe-secret
+STRIPE_WEBHOOK_SECRET=your-webhook-secret
+CLIENT_URL=http://localhost:3000
+```
+
+---
+
+## Running the App
+
+### Start the backend
+
+```bash
+npm start
+```
+
+### Start the frontend
+
+```bash
+cd client
+npm start
+```
+
+Backend runs at: `http://localhost:3001`
+Frontend runs at: `http://localhost:3000`
+
+---
+
+## API Endpoints
+
+### Authentication
+
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | `/auth/register` | Register user |
+| POST   | `/auth/login`    | Local login   |
+| GET    | `/auth/google`   | Google OAuth  |
+| GET    | `/auth/logout`   | Logout        |
+
+### Products
+
+| Method | Endpoint        | Description          |
+| ------ | --------------- | -------------------- |
+| GET    | `/products`     | Get all products     |
+| GET    | `/products/:id` | Get a single product |
+
+### Cart
+
+| Method | Endpoint           | Description    |
+| ------ | ------------------ | -------------- |
+| GET    | `/cart`            | Get user cart  |
+| POST   | `/cart/:productId` | Add product    |
+| DELETE | `/cart/:productId` | Remove product |
+
+### Orders
+
+| Method | Endpoint  | Description     |
+| ------ | --------- | --------------- |
+| GET    | `/orders` | Get user orders |
+| POST   | `/orders` | Create order    |
+
+### Stripe
+
+| Method | Endpoint                   | Description           |
+| ------ | -------------------------- | --------------------- |
+| POST   | `/create-checkout-session` | Create Stripe session |
+
+---
+
