@@ -1,64 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Sekuya&display=swap');
 body {
-    background-color: darkgrey;
+    background-color: #f4f4f9;
+    font-family: 'Sekuya', sans-serif;
+    color: #333;
 }
 
 main {
     padding: 0.25rem 1cap;
-    padding-top: 30px;
+    padding-top: 60px;
 }
-
-
-
-
-/* NavLink Styling */
-
-.nav-bar  {
-    display: flex;
+.nav-bar {
+    display: flex;               
     justify-content: space-between;
     align-items: center;
-
-    background-color: aqua;
+    background-color: #2c3e50;
     padding: 0.5rem 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    box-sizing: border-box;   
+
 }
 
-.nav-link {
-    text-decoration: none;
-    color: gray;
-    font-weight: normal;
-    display: inline-flex;
+.nav-bar-left,
+.nav-bar-right {
+    display: flex;            
     align-items: center;
-    padding: 0.25rem 0.5rem;
-    transition: color 0.2s, font-weight 0.2s;
+    gap: 1rem;                 
 }
 
-.nav-link:hover {
+.nav-link,
+.nav-bar button {
+    text-decoration: none;
+    color: white;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;  
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.2s, font-weight 0.2s;
+    font-family: 'Sekuya', sans-serif;
+}
+
+.nav-link:hover,
+.nav-bar button:hover {
     color: black;
 }
 
-.nav-link.active {
-    color: blue;
+.nav-link.active,
+.nav-bar button.active {
+    color:#333;
     font-weight: bold;
 }
 
-.nav-bar-right,
-.nav-bar-left {
-    align-items: center;
-    display: inline-flex;
-    gap: 1rem;
+.companyName {
+    text-align: center;
+    color: white;
 }
-
-.nav-bar-right {
-    padding-right: 2rem;
-}
-
-.nav-bar a {
-    display: inline-flex;
-    align-items: center;
-    text-decoration: none;
-}
-

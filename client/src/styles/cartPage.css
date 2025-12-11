@@ -1,0 +1,27 @@
+button {
+  width: 250px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #2c3e50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+  font-family: 'Sekuya', sans-serif;
+}
+
+input {
+margin-bottom : 1rem;
+  width: 250px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color:  #2c3e50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
+}

@@ -28,12 +28,12 @@ export default function ProductPage() {
     if (!product) return <p>Loading...</p>;
 
     return (
-        <div>
+        <main>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>
-
+          
             <button onClick={() => addToCart(product)} >Add to Cart</button>
-        </div>
+        </main>
     );
 }

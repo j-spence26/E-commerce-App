@@ -1,15 +1,14 @@
 import React from "react";
+import "../../styles/tile.css";
 
-export const Tile = ({ name, description }) => {
-  const array = description ? Object.values(description) : [];
+const Tile = ({ product }) => {   
   return (
-    <div className="tile-container">
-      <p className="tile-title">{name}</p>
-      {array.map((item, index) => (
-        <p className="tile" key={index}>{item}</p>
-      ))}
+    <div className="tile">
+      <img src={product.image} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p>{product.description}</p>
+      <p>Price: £{product.price}</p>
     </div>
-
   );
 };
 

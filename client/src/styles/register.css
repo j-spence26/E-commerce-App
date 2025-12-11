@@ -1,0 +1,94 @@
+.login-link-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.login-link-wrapper a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    background-color: #4285f4;
+    padding: 0.5rem 1rem;
+}
+
+.login-link-wrapper a:hover {
+    color: #000;
+}
+
+
+
+.registration-form .button {
+  padding: 0.5rem 1rem;
+  background-color: #4285f4; 
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.register-button {
+  width: 250px;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #4285f4;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.95rem;
+   font-family: 'Sekuya', sans-serif;
+  transition: background-color 0.2s;
+}
+
+.register-button:hover {
+  background-color: #357ae8;
+  color: black;
+}
+
+.registration-input::placeholder {
+    color: white;
+    opacity: 1; 
+}
+
+.registration-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+}
+
+.registration-input {
+    width: 250px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.registration-form button {
+    width: 250px;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #4285f4;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+     font-size: 0.95rem;
+}
+
+.title h2 {
+    text-align: center;
+
+}

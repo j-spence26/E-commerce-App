@@ -1,7 +1,7 @@
 import React from "react";
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Navigate } from "react-router-dom"
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route} from "react-router-dom"
 import Root, { ROUTES } from "./components/root/root";
-import Products  from "./containers/products";
+import Products  from "./components//products/products";
 import ProductPage from "./containers/productsPage";
 import  Register from "./containers/registrationPage";
 import Login from "./containers/loginPage";
@@ -14,9 +14,12 @@ import './styles/App.css';
 import About from "./containers/aboutPage";
 import Contact from "./containers/contactPage";
 import PrivacyPolicy from "./containers/privacyPolicyPage";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe("pk_test_51Sd8XaGlkF6WTlVWIldiwdPxR7q6WZtjkHLrJnIpQpLqQSi0ZA0aqKINcZ6OW80a8hwfgQPBE1WT0DeNiyKreChC00qJJgojbT");
 
 function App() {
-
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <Root/> }>
       <Route index element={ <HomePage /> }/>
@@ -33,14 +36,14 @@ function App() {
     </Route>
   ));
   
-  return (      <AuthProvider>
+  return (      
+  <Elements stripe={stripePromise} >
+    <AuthProvider>
           <CartProvider>
             <RouterProvider router={router}/>
           </CartProvider>
     </AuthProvider>
-
-
-
+  </Elements>
   );
 }
 

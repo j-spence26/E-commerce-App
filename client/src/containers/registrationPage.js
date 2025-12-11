@@ -42,12 +42,15 @@ export default function Register() {
   };
 
   return (
-    <div>
-      <h2>Create account</h2>
-
+    <main>
+      <div className="title" >
+        <h2>Create account</h2>
+      </div>
       <div className="registration-form">
-        <form onSubmit={handleSubmit}>
+        <div className="registration-form" >
+            <form onSubmit={handleSubmit}>
           <input
+            className="registration-input"
             type="text"
             placeholder="First name"
             value={firstName}
@@ -55,6 +58,7 @@ export default function Register() {
           />
 
           <input
+            className="registration-input"
             type="text"
             placeholder="Last name"
             value={lastName}
@@ -62,6 +66,7 @@ export default function Register() {
           />
 
           <input
+            className="registration-input"
             type="email"
             placeholder="Email"
             value={email}
@@ -69,22 +74,25 @@ export default function Register() {
           />
 
           <input
+            className="registration-input"
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <button type="submit">Register</button>
+          <button className="register-button" type="submit">Register</button>
         </form>
+        </div>
+      
         <p>{message}</p>
-        <div className="login-link-wrapper">
+       <div className="login-link-wrapper">
       <Link className="login-link" to="/loginPage">
         Click Here To Login!
       </Link>
     </div>
 
       </div>
-    </div>
+    </main>
   );
 }

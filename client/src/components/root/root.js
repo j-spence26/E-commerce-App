@@ -16,47 +16,69 @@ export const ROUTES = {
 };
 
 function Root() {
-  const { user, logout } = useAuth();
+  const { user} = useAuth();
+
   return (
     <div>
-      <nav className="nav-bar"> 
-        <div className="nav-bar-left" >
-        <NavLink to={ROUTES.HOME}
-        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-        >Home</NavLink>
-        <NavLink to={ROUTES.PRODUCTS}
-        className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-        >Products</NavLink>
+      <nav className="nav-bar">
+        <div className="nav-bar-left">
+          <NavLink
+            to={ROUTES.HOME}
+            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to={ROUTES.PRODUCTS}
+            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+          >
+            Products
+          </NavLink>
+        </div>  
+       <h2 className="companyName" >Dog Walking Ltd.</h2>
+
+        <div className="nav-bar-right">
+          {!user ? (
+            <>
+              <NavLink
+                to={ROUTES.LOGIN}
+                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+              >
+                Login
+              </NavLink>
+              <NavLink
+                to={ROUTES.REGISTRATIONS}
+                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+              >
+                Register
+              </NavLink>
+            </>
+          ) : (
+            <>
+      
+              <NavLink
+                to={ROUTES.CART}
+                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+              >
+                Cart
+              </NavLink>
+              <NavLink
+                to={ROUTES.ACCOUNT}
+                className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
+              >
+                My Account
+              </NavLink>
+            </>
+          )}
         </div>
-        {!user ? (
-          <>
-            <div className="nav-bar-right">
-            <NavLink to={ROUTES.LOGIN}
-            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-            >Login</NavLink>
-            <NavLink to={ROUTES.REGISTRATIONS}
-            className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}
-            >Register</NavLink>
-            </div>
-          
-          </>
-        ) : (
-          <>
-          <button onClick={logout} style={{ marginLeft: "10px" }}>
-            Logout
-          </button>
-            <NavLink to={ROUTES.CART} className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} > Cart </NavLink>
-            <NavLink to={ROUTES.ACCOUNT} className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} > My Account</NavLink>
-          </>
-        )}
       </nav>
+
       <main>
-         <Outlet />
-        
-        </main>  
-     <Footer />
+        <Outlet />
+      </main>
+
+      <Footer />
     </div>
-    
   );
 }
 

@@ -1,8 +1,8 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const pool = require('../db/db'); 
+import express from "express";
+import bcrypt from 'bcrypt';
+import pool from '../db/db.js';
 const router = express.Router();
-const passport = require('passport');
+import passport from "passport";
 
 router.get('/google',
   passport.authenticate('google', { scope: ['openid', 'profile', 'email'] })
@@ -118,4 +118,4 @@ router.post('/logout', (req, res) => {
 
 
 
-module.exports = router;
+export default router;

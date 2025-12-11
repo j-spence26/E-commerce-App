@@ -1,5 +1,5 @@
-const express = require('express');
-const pool = require('../db/db');
+import express from "express";
+import pool from "../db/db.js";
 const router = express.Router();
 
 
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
 });
 
 
-// Add or update a product in the cart
+
 router.post('/:cart_id/items', async (req, res) => {
   const { cart_id } = req.params;
   const { product_id, name, price, quantity } = req.body;
@@ -72,7 +72,6 @@ router.post('/:cart_id/items', async (req, res) => {
   }
 });
 
-// Checkout
 router.post('/:cart_id/checkout', async (req, res) => {
   const { cart_id } = req.params;
 
@@ -85,13 +84,11 @@ router.post('/:cart_id/checkout', async (req, res) => {
 
     const totalAmount = cart.products.reduce((sum, p) => sum + p.price * p.quantity, 0);
 
-    // Create order
     const orderResult = await pool.query(
       'INSERT INTO Orders (customer_id, total_amount, products) VALUES ($1, $2, $3) RETURNING *',
       [cart.customer_id, totalAmount, JSON.stringify(cart.products)]
     );
 
-    // Clear cart
     await pool.query('UPDATE cart SET products = $1 WHERE cart_id = $2', [[], cart_id]);
 
     res.json({
@@ -131,4 +128,4 @@ router.delete('/:cart_id/items/:product_id', async (req, res) => {
 
 
 
-module.exports = router;
+export default router;

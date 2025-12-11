@@ -40,7 +40,7 @@ export default function Login() {
   };
 
   return (
-    <div >
+    <main >
       <div className="title">
       <h2>Login Below</h2>
       </div>
@@ -61,17 +61,17 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
+        <button className="button" type="submit">Login</button>
       </form>
       </div>
       
 
       <p>{message}</p>
       <div className="login-buttons">
-      <Link to="/registrationPage">Don't have an account? Register</Link>
+      <Link to="/registrationPage" className="button">Don't have an account? Register</Link>
       <a href="http://localhost:3000/auth/google" className="button">Sign in with Google</a>
       </div>
 
-    </div>
+    </main>
   );
 }

@@ -1,7 +1,8 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oidc');
+import passport from 'passport';
 
-module.exports = function (pool) {
+import { Strategy as GoogleStrategy } from 'passport-google-oidc'
+
+export default function initPassport(pool) {
 
   passport.use(
     new GoogleStrategy(

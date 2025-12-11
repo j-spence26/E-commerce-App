@@ -12,6 +12,7 @@
     margin-top: 0.5rem;
     display: flex;
     justify-content: center;
+    align-items: center;  /* add this */
     gap: 1rem;
 }
 
@@ -23,4 +24,19 @@
 
 .footer-links a:hover {
     color: #4285f4;
+}
+
+.logout {
+    color: white;
+    font-weight: normal;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s, font-weight 0.2s;
+    font-family: 'Sekuya', sans-serif;
+}
+
+.logout:hover {
+    color: #4285f4; /* same as footer links */
+    font-weight: bold; /* optional */
 }

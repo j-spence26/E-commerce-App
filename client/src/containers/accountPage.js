@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
 import { useAuth } from "../components/auth/AuthContext";
-import { useCart } from "../components/cart/cartContext";
 
 export default function Account() {
   const { isLoggedIn } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [customerId, setCustomerId] = useState([]);
+  const [customerId, setCustomerId] = useState(null);
+
 
   const fetchUser = async () => {
     try {
@@ -19,40 +18,60 @@ export default function Account() {
     }
   };
 
-  const fetchOrderHistory = async (customer_id) => {
+
+  const fetchOrderHistory = async (id) => {
     try {
-      const res = await fetch(`http://localhost:3000/orders/${customerId}}`, { credentials: "include" });
+      const res = await fetch(`http://localhost:3000/order/${id}`, { credentials: "include" });
       const data = await res.json();
       setOrders(data);
     } catch (err) {
-      console.error("Error fetching orders: ", err)
+      console.error("Error fetching orders:", err);
+    } finally {
+      setLoading(false);
     }
-  }
-    useEffect(() => { 
-    if (isLoggedIn) 
-      {setCustomerId(fetchUser)
-        fetchOrderHistory(customerId)
-  } else {
-     setOrders([]);
-    setLoading(false);
-  }
-}, [isLoggedIn]);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchUser();
+    } else {
+      setOrders([]);
+      setLoading(false);
+    }
+  }, [isLoggedIn]);
+
+
+  useEffect(() => {
+    if (customerId) {
+      fetchOrderHistory(customerId);
+    }
+  }, [customerId]);
+
+  if (loading) return <p>Loading...</p>;
+
   return (
-   <div>
+    <div>
       <h2>My Account</h2>
-
-      {!isLoggedIn && <p>Please log in to see order history.</p>}
-
-      {orders.length === 0 ? (
+      {!isLoggedIn ? (
+        <p>Please log in to see order history.</p>
+      ) : orders.length === 0 ? (
         <p>No orders</p>
       ) : (
-        <>
-          <ul>
-            {orders.map((item) => (
-              <p> {item.product} </p>
-            ))}
-          </ul>
-        </>
+        <ul>
+  {orders.map((order) => (
+    <li key={order.order_id}>
+      <p>Order #{order.order_id}</p>
+      <ul>
+        {order.products.map((product) => (
+          <li key={product.product_id}>
+            {product.name} - £{product.price} x {product.quantity}
+          </li>
+        ))}
+      </ul>
+    </li>
+  ))}
+</ul>
+
       )}
     </div>
   );

@@ -1,6 +1,3 @@
-
-/*Login Page */
-
 .login-buttons {
     display: flex;
     flex-direction: column;
@@ -9,45 +6,11 @@
     margin-top: 1rem;
 }
 
-.login-buttons a {
-    text-decoration: none;
-    color: white;
-    font-size: 0.95rem;
-    font-weight: bold;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: backgound-color 0.2s;
-    background-color: #4285f4;
-    padding: 0.5rem 1rem;
-}
-
-.login-buttons a:hover {
-    color: #000;
-}
-
-.login-buttons .button {
-  padding: 0.5rem 1rem;
-  background-color: #4285f4; 
-  color: white;
-  font-weight: bold;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.2s;
-}
-
-.login-buttons .button:hover {
-  background-color: #357ae8;
-}
-
 .login-form form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-
 }
 
 .login-input {
@@ -55,21 +18,35 @@
     padding: 0.5rem 1rem;
     border-radius: 6px;
     border: 1px solid #ccc;
+
+}
+.login-input::placeholder {
+    color: white;
+    opacity: 1; 
+}
+.title h2 {
+    text-align: center;
+    color: #333;
 }
 
-.login-form button {
+.button {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 250px;
     padding: 0.5rem 1rem;
     border-radius: 6px;
     border: none;
     background-color: #4285f4;
-    color: white;
+    color: #f4f4f9;
     font-weight: bold;
+    font-size: 0.95rem;
     cursor: pointer;
-     font-size: 0.95rem;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-.title h2 {
-    text-align: center;
-    color: white;
+.button:hover {
+    background-color: #357ae8;
+    color: black;
 }

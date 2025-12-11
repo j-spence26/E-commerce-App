@@ -1,4 +1,5 @@
-const { Pool } = require('pg');  
+import pkg from "pg";
+const { Pool } = pkg;
 
 const pool = new Pool({
   user: 'postgres',    
@@ -16,4 +17,4 @@ pool.connect((err, client, release) => {
   release(); 
 });
 
-module.exports = pool;
+export default pool;
